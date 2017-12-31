@@ -41,6 +41,8 @@ PFOLDER="${DATA_PATH}/${FOLDER}"
 
 POVPN_PATTERN="${PFOLDER}/${FILE_PREFIX}*${FILE_TYPE}"
 
+DELETE_SHELL="${SHELL_PATH}/del-vpngate.sh"
+
 #--------------------------------------------------------------
 rm -rf ${PFOLDER}/*${FILE_TYPE_REM}
 

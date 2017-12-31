@@ -39,5 +39,4 @@ $ bash /home/user/../auto-ovpn@yahoo.com/sh/del-all-vpngate.sh
 >>> Stop your devices keep connected VPN
 $ bash /home/user/../auto-ovpn@yahoo.com/sh/stop-vpngate.sh
 
-
-* These bash program can work in GNOME/KDE
+*** These bash program can work in GNOME/KDE ***
