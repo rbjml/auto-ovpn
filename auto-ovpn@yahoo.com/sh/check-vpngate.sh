@@ -22,4 +22,27 @@
 
 SHELL_PATH="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-ps aux | grep -c "bash ${SHELL_PATH}/start-vpngate.sh"
+ACTIVE_VPN_LIST=`nmcli con show --active | grep ' vpn ' | awk '{print $1}' | tr "\n" " "`
+
+START_SHELL_RUN=`ps aux | grep -c "bash ${SHELL_PATH}/start-vpngate.sh"`
+
+if [ ${#ACTIVE_VPN_LIST} -eq 0 ]
+then
+	if [ "${START_SHELL_RUN}" == "0" ] || [ "${START_SHELL_RUN}" == "1" ]
+	then
+		# Network Manager Active VPN: X, start-vpngate.sh: X
+		echo "0"
+	else
+		# Network Manager Active VPN: X, start-vpngate.sh: V
+		echo "2"
+	fi
+else
+	if [ "${START_SHELL_RUN}" == "0" ]
+	then
+		# Network Manager Active VPN: V, start-vpngate.sh: X
+		echo "3"
+	else
+		# Network Manager Active VPN: V, start-vpngate.sh: V
+		echo "4"
+	fi
+fi

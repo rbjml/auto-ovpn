@@ -213,7 +213,7 @@ const PanelMenuButton = new Lang.Class({
 		});		
 		this.menu.addMenuItem(prefs);		
 		_appSys = null; prefs = null;
-		
+
 		// Start VPN
 		menu_item_VPN_START = new PopupMenu.PopupMenuItem('');
 		let boxLayout311 = new St.BoxLayout();
