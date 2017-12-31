@@ -713,6 +713,7 @@ const PanelMenuButton = new Lang.Class({
 
 		if (CURRENT_IP !== null) {
 			if (CURRENT_IP !== LAST_IP) {
+				this.setShowHide();
 				let self = this;
 				_getIPDetails(CURRENT_IP, function(err, ipData) {
 					if (ipData) {
