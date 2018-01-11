@@ -47,6 +47,8 @@ POVPN_PATTERN="${PFOLDER}/${FILE_PREFIX}*${FILE_TYPE}"
 # Clear settings in Network Manager
 #--------------------------------------------------------------
 
+CNT=0
+
 VPNGATE_LIST=`nmcli con show | grep ' vpn ' | grep '^vpngate_' | awk '{print $1}' | tr "\n" " "`
 
 for vpn_name in ${VPNGATE_LIST}
@@ -59,12 +61,16 @@ do
 
 	nmcli con down ${vpn_name}
 	nmcli con delete ${vpn_name}
-done
 
+	CNT=$((CNT + 1))
+done
 
 if [ "${INPUT_STR}" == "DEL" ]
 then
-	MSG=`notify-send -i "${DATA_PATH}/icon.png" "Auto OVPN" "All of VPN Connection successfully deleted."`
+	if [ ${CNT} -gt 0 ]
+	then
+		MSG=`notify-send -i "${DATA_PATH}/icon.png" "Auto OVPN" "All of VPN Connection successfully deleted."`
+	fi
 fi
 
 # sudo nmcli con reload
