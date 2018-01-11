@@ -48,22 +48,27 @@ while read line; do
 	read -a IN_arr <<< "${line}"
 	if [[ ${IN_arr[1]} =~ ${IP_RE} ]]
 	then
-		data_ori=`echo ${IN_arr[14]} | base64 --decode`
+		# ignore sterr - base64: invalid input
+		data_ori=`echo -n "${IN_arr[14]}" | base64 -d 2> /dev/null`
 
-		data_rem=`echo ${data_ori} | grep -v ^# | grep -v ^$`		
-		data_pro=`echo ${data_rem}   | grep proto  | tr " " ","`
+		# remove remarks
+		data_rem=`echo ${data_ori} | grep -v ^# | grep -v ^$`
+
+		data_pro=`echo ${data_rem} | grep proto  | tr " " ","`
 		data_ipp=`echo ${data_rem} | grep remote | tr " " ","`
 
+		# proto: TCP / UDP
 		IFS=','
 		read -a arr_m <<< "${data_pro}"
 		proto=`echo ${arr_m[1]} | sed $'s/[\\r]//'`
 
+		# IP / PORT
 		IFS=','
 		read -a arr_n <<< "${data_ipp}"
 		ip=`echo ${arr_n[1]}`
 		pt=`echo ${arr_n[2]} | sed $'s/[\\r]//'`
 
-		COUNTRY_CODE=`geoiplookup ${ip} | sed 's/^.*: //' | sed 's/,.*//' | head -n1`
+		COUNTRY_CODE=`geoiplookup "${ip}" | sed 's/^.*: //' | sed 's/,.*//' | head -n1`
 		LEN_COUNTRY_CODE=`echo ${#COUNTRY_CODE}`
 
 		PFilename=""
