@@ -48,7 +48,7 @@ while read line; do
 	read -a IN_arr <<< "${line}"
 	if [[ ${IN_arr[1]} =~ ${IP_RE} ]]
 	then
-		# ignore sterr - base64: invalid input
+		# ignore stderr - base64: invalid input
 		data_ori=`echo -n "${IN_arr[14]}" | base64 -d 2> /dev/null`
 
 		# remove remarks
