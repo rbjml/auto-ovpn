@@ -75,7 +75,22 @@ function check_VPN()
 			sleep ${MAX_SECONDS}
 			continue
 		else
-			VPN_LIST=`nmcli con show | grep ' vpn ' | awk '{print $1}' | tr "\n" " "`
+			VPN_LIST=""
+
+			# Consider using COUNTRY CODE that I choose first
+			if [ ${#INPUT_COUNTRY_CODE} -gt 0 ]
+			then
+				VPN_INPUT_COUNTRY_CODE_LIST=`nmcli con show | grep ' vpn ' | awk '{print $1}' | grep "vpngate_${INPUT_COUNTRY_CODE}_" | tr "\n" " "`
+
+				if [ ${#VPN_INPUT_COUNTRY_CODE_LIST} -gt 0 ]
+				then
+					VPN_LIST=${VPN_INPUT_COUNTRY_CODE_LIST}
+				else
+					VPN_LIST=`nmcli con show | grep ' vpn ' | awk '{print $1}' | tr "\n" " "`
+				fi
+			else
+				VPN_LIST=`nmcli con show | grep ' vpn ' | awk '{print $1}' | tr "\n" " "`
+			fi
     
 			if [ ${#VPN_LIST} -gt 0 ]
 			then
