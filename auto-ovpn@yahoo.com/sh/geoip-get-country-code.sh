@@ -20,7 +20,7 @@
 # along with Auto OVPN gnome extension.  If not, see <http://www.gnu.org/licenses/>.
 # 
 
-DEFAULT_COUNTRY_CODE="CN"
+DEFAULT_COUNTRY_CODE="MY"
 
 IP="${1}"
 
