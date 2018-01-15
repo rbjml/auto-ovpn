@@ -759,11 +759,16 @@ const PanelMenuButton = new Lang.Class({
 										LOCATION = ipData.loc;
 										LAST_IP = CURRENT_IP;
 									} else {
-										_getGoogleMap(ipData.loc, function(err) {
-											self._updateGoogleMap();
+										if (ipData.loc.indexOf("192.168.") > -1) {
 											LOCATION = ipData.loc;
 											LAST_IP = CURRENT_IP;
-										});
+										} else {
+											_getGoogleMap(ipData.loc, function(err) {
+												self._updateGoogleMap();
+												LOCATION = ipData.loc;
+												LAST_IP = CURRENT_IP;
+											});
+										}
 									}
 
 									map_file_path = null;
